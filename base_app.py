@@ -21,7 +21,7 @@ import joblib,os
 # Images
 from PIL import Image
 image = Image.open('resources/imgs/company_logo_cropped.jpg')
-contact_image = Image.open('resources/imgs/contact.jpg')
+#contact_image = Image.open('resources/imgs/contact.jpg')
 
 # Data dependencies
 import pandas as pd
@@ -176,7 +176,7 @@ def main():
 	# Building out the "Contact us" page
 	if selection == "Contact us":
 		st.info("Contact us")
-		st.image(contact_image)
+		#st.image(contact_image)
 		# You can read a markdown file from supporting resources folder
 
 	# Building out the predication page
