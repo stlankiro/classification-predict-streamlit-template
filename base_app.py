@@ -21,6 +21,7 @@ import joblib,os
 # Images
 from PIL import Image
 image = Image.open('resources/imgs/company_logo_cropped.jpg')
+contact_image = Image.open('resources/imgs/contact.jpg')
 
 # Data dependencies
 import pandas as pd
@@ -175,21 +176,14 @@ def main():
 	# Building out the "Contact us" page
 	if selection == "Contact us":
 		st.info("Contact us")
+		st.image(contact_image)
 		# You can read a markdown file from supporting resources folder
-		st.markdown("Some information here")
-
-    #models = ["Prediction", "Information", "Data Cleaning and Analysis", "About us", "Contact us"]
-	    #select_mod = st.selectbox("Choose Option", models)
 
 	# Building out the predication page
 	if selection == "Prediction":
 		st.info("Prediction with ML Models")
 		# Creating a text box for user input
 		tweet_text = st.text_area("Enter Text","Type Here")
-
-        #models = ["Prediction", "Information", "Data Cleaning and Analysis", "About us", "Contact us"]
-	    #select_mod = st.selectbox("Choose Option", models)
-        
 
 
 		if st.button("Classify (Logistic Regression)"):
