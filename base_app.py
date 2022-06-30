@@ -87,6 +87,9 @@ def read_markdown_file(markdown_file):
     return Path(markdown_file).read_text()
 info_markdown = read_markdown_file("./resources/info.md")
 
+about_us_markdown = read_markdown_file("./resources/about_us.md")
+services_markdown = read_markdown_file("./resources/services.md")
+
 # Prepare Wordclouds
 @st.cache
 def create_wordclouds(train_df):
@@ -149,7 +152,7 @@ def main():
 
 	# Creating sidebar with selection box -
 	# you can create multiple pages this way
-	options = ["Prediction", "Information", "Data Cleaning and Analysis", "About us", "Contact us"]
+	options = ["Prediction", "Information", "Data Cleaning and Analysis", "About us", "Services", "Contact us"]
 	selection = st.sidebar.selectbox("Choose Option", options)
 
 	# Building out the "Information" page
@@ -167,7 +170,7 @@ def main():
 		st.subheader("About us")
 		st.info("About us")
 		# You can read a markdown file from supporting resources folder
-		st.markdown("Some information here")
+		st.markdown(about_us_markdown)
 
 	# Building out the "Contact us" page
 	if selection == "Contact us":
@@ -186,6 +189,8 @@ def main():
 
         #models = ["Prediction", "Information", "Data Cleaning and Analysis", "About us", "Contact us"]
 	    #select_mod = st.selectbox("Choose Option", models)
+        
+
 
 		if st.button("Classify (Logistic Regression)"):
 			# Transforming user input with vectorizer
@@ -226,7 +231,11 @@ def main():
 			# more human interpretable.
 			st.success("Text Categorized as: {}".format(prediction))
 
-            
+    # Building out the "Services" page
+	if selection == "Services":
+		st.info("Services")
+		# You can read a markdown file from supporting resources folder
+		st.markdown(services_markdown)            
 
 	# Building out the "Data Cleaning and Analysis" page
 	if selection == "Data Cleaning and Analysis":
