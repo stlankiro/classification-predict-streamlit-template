@@ -18,6 +18,10 @@
 import streamlit as st
 import joblib,os
 
+# Images
+from PIL import Image
+image = Image.open('resources/imgs/company_logo_cropped.jpg')
+
 # Data dependencies
 import pandas as pd
 
@@ -139,6 +143,7 @@ def main():
 
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
+	st.image(image)
 	st.title("Tweet Classifer")
 	st.subheader("Climate change tweet classification")
 
