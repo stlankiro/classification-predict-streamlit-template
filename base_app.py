@@ -20,8 +20,6 @@ import joblib,os
 
 # Images
 from PIL import Image
-#image = Image.open('resources/imgs/company_logo_cropped.jpg')
-#contact_image = Image.open('resources/imgs/contact.jpg')
 
 # Data dependencies
 import pandas as pd
@@ -42,7 +40,6 @@ tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl f
 raw = pd.read_csv("resources/train.csv")
 
 # Clean data
-cleaning_df = raw.copy()
 @st.cache
 def clean(train_df):
     def replace_urls(tweet_df):
@@ -81,15 +78,9 @@ def clean(train_df):
 
     return train_df
 
-cleaned_df = clean(cleaning_df)
-
 # Read .md info file
 def read_markdown_file(markdown_file):
     return Path(markdown_file).read_text()
-info_markdown = read_markdown_file("./resources/info.md")
-
-about_us_markdown = read_markdown_file("./resources/about_us.md")
-services_markdown = read_markdown_file("./resources/services.md")
 
 # Prepare Wordclouds
 @st.cache
@@ -124,22 +115,6 @@ def create_wordclouds(train_df):
 
     return accept_wordcloud, deny_wordcloud, neutral_wordcloud, info_wordcloud
 
-accept_wordcloud, deny_wordcloud, neutral_wordcloud, info_wordcloud = create_wordclouds(cleaned_df)
-
-f, axarr = plt.subplots(4,1, figsize=(45,35))
-axarr[0].imshow(accept_wordcloud)
-axarr[1].imshow(deny_wordcloud)
-axarr[2].imshow(neutral_wordcloud)
-axarr[3].imshow(info_wordcloud)
-
-axarr[0].set_title('Accept', fontsize=30)
-axarr[1].set_title('Deny', fontsize=30)
-axarr[2].set_title('Neutral', fontsize=30)
-axarr[3].set_title('Info', fontsize=30)
-
-for ax in f.axes:
-    plt.sca(ax)
-    plt.axis('off')
 
 # The main function where we will build the actual app
 def main():
@@ -147,7 +122,8 @@ def main():
 
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
-	#st.image(image)
+	image = Image.open('resources/imgs/company_logo_cropped.jpg')
+	st.image(image)
 	st.title("Tweet Classifer")
 	st.subheader("Climate change tweet classification")
 
@@ -160,6 +136,7 @@ def main():
 	if selection == "Information":
 		st.info("General Information")
 		# You can read a markdown file from supporting resources folder
+		info_markdown = read_markdown_file("./resources/info.md")
 		st.markdown(info_markdown) #, unsafe_allow_html=True)
 
 		st.subheader("Raw Twitter data and label")
@@ -171,12 +148,14 @@ def main():
 		st.subheader("About us")
 		st.info("About us")
 		# You can read a markdown file from supporting resources folder
+		about_us_markdown = read_markdown_file("./resources/about_us.md")
 		st.markdown(about_us_markdown)
 
 	# Building out the "Contact us" page
 	if selection == "Contact us":
 		st.info("Contact us")
-		#st.image(contact_image)
+		contact_image = Image.open('resources/imgs/contact.jpg')
+		st.image(contact_image)
 		# You can read a markdown file from supporting resources folder
 
 	# Building out the predication page
@@ -229,6 +208,7 @@ def main():
 	if selection == "Services":
 		st.info("Services")
 		# You can read a markdown file from supporting resources folder
+		services_markdown = read_markdown_file("./resources/services.md")
 		st.markdown(services_markdown)            
 
 	# Building out the "Data Cleaning and Analysis" page
@@ -238,11 +218,30 @@ def main():
 		st.subheader("Cleaned Twitter data and label")
 		st.markdown("Select checkbox to view data")
 		if st.checkbox('Show cleaned data'): # data is hidden if box is unchecked
+			cleaning_df = raw.copy()
+			cleaned_df = clean(cleaning_df)
 			st.write(cleaned_df[['sentiment', 'message']]) # will write the df to the page
 
 		st.info("Word Clouds")
 		st.markdown("Select checkbox to view wordclouds")
 		if st.checkbox('Show Wordclouds'): # data is hidden if box is unchecked
+			accept_wordcloud, deny_wordcloud, neutral_wordcloud, info_wordcloud = create_wordclouds(cleaned_df)
+
+			f, axarr = plt.subplots(4,1, figsize=(45,35))
+			axarr[0].imshow(accept_wordcloud)
+			axarr[1].imshow(deny_wordcloud)
+			axarr[2].imshow(neutral_wordcloud)
+			axarr[3].imshow(info_wordcloud)
+
+			axarr[0].set_title('Accept', fontsize=30)
+			axarr[1].set_title('Deny', fontsize=30)
+			axarr[2].set_title('Neutral', fontsize=30)
+			axarr[3].set_title('Info', fontsize=30)
+
+			for ax in f.axes:
+				plt.sca(ax)
+				plt.axis('off')
+
 			st.pyplot(f) # will write the df to the page
 
 # Required to let Streamlit instantiate our web app.  
