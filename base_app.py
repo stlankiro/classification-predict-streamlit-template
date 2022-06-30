@@ -225,6 +225,8 @@ def main():
 		st.info("Word Clouds")
 		st.markdown("Select checkbox to view wordclouds")
 		if st.checkbox('Show Wordclouds'): # data is hidden if box is unchecked
+			cleaning_df = raw.copy()
+			cleaned_df = clean(cleaning_df)
 			accept_wordcloud, deny_wordcloud, neutral_wordcloud, info_wordcloud = create_wordclouds(cleaned_df)
 
 			f, axarr = plt.subplots(4,1, figsize=(45,35))
