@@ -20,7 +20,7 @@ import joblib,os
 
 # Images
 from PIL import Image
-image = Image.open('resources/imgs/company_logo_cropped.jpg')
+#image = Image.open('resources/imgs/company_logo_cropped.jpg')
 #contact_image = Image.open('resources/imgs/contact.jpg')
 
 # Data dependencies
@@ -147,7 +147,7 @@ def main():
 
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
-	st.image(image)
+	#st.image(image)
 	st.title("Tweet Classifer")
 	st.subheader("Climate change tweet classification")
 
