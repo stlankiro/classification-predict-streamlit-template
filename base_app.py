@@ -30,7 +30,7 @@ from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
 
 # Vectorizer
-news_vectorizer = open("resources/countVectr1.pkl","rb")
+news_vectorizer = open("resources/vectorizer.pkl","rb")
 tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl file
 
 # Load your raw data
@@ -182,12 +182,38 @@ def main():
         #models = ["Prediction", "Information", "Data Cleaning and Analysis", "About us", "Contact us"]
 	    #select_mod = st.selectbox("Choose Option", models)
 
-		if st.button("Classify"):
+		if st.button("Classify (Logistic Regression)"):
 			# Transforming user input with vectorizer
 			vect_text = tweet_cv.transform([tweet_text]).toarray()
 			# Load your .pkl file with the model of your choice + make predictions
 			# Try loading in multiple models to give the user a choice
-			predictor = joblib.load(open(os.path.join("resources/logistic_model1.pkl"),"rb"))
+			predictor = joblib.load(open(os.path.join("resources/logistic_reg_model.pkl"),"rb"))
+			prediction = predictor.predict(vect_text)
+
+			# When model has successfully run, will print prediction
+			# You can use a dictionary or similar structure to make this output
+			# more human interpretable.
+			st.success("Text Categorized as: {}".format(prediction))
+            
+		if st.button("Classify (SVM RBF)"):
+			# Transforming user input with vectorizer
+			vect_text = tweet_cv.transform([tweet_text]).toarray()
+			# Load your .pkl file with the model of your choice + make predictions
+			# Try loading in multiple models to give the user a choice
+			predictor = joblib.load(open(os.path.join("resources/RBF_SVM_model.pkl"),"rb"))
+			prediction = predictor.predict(vect_text)
+
+			# When model has successfully run, will print prediction
+			# You can use a dictionary or similar structure to make this output
+			# more human interpretable.
+			st.success("Text Categorized as: {}".format(prediction))
+            
+		if st.button("Classify (Random Forest)"):
+			# Transforming user input with vectorizer
+			vect_text = tweet_cv.transform([tweet_text]).toarray()
+			# Load your .pkl file with the model of your choice + make predictions
+			# Try loading in multiple models to give the user a choice
+			predictor = joblib.load(open(os.path.join("resources/Random_Forest_model.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
 
 			# When model has successfully run, will print prediction
